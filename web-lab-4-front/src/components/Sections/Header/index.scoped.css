@@ -1,0 +1,20 @@
+nav{
+    text-decoration: none;
+    text-align: center;
+    color: var(--dark-blue);
+    font-size: large;
+}
+
+.link{
+    margin-left: 10px;
+    margin-right: 10px;
+    white-space: nowrap;
+    text-decoration: none;
+    text-align: center;
+}
+
+a:link, a:visited {
+    color: var(--dark-blue);
+    background-color: transparent;
+    text-decoration: none;
+}

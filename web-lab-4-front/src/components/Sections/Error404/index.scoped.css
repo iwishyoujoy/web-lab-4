@@ -1,0 +1,19 @@
+.error{
+    margin-top: 5%;
+    /*margin-left: 20%;*/
+    /*margin-right: 20%;*/
+    background-color: var(--light-background-color);
+    border-radius: var(--main-radius);
+    padding: 20px 20px 30px 30px;
+}
+
+.error-number{
+    font-size: xxx-large;
+    font-weight: 400;
+    margin-bottom: 5%;
+}
+
+#error-big-text{
+    margin-bottom: 2%;
+}
+

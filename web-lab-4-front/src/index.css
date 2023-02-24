@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@200;300;400&display=swap');
+
+:root{
+  --main-radius: 10px;
+  --main-padding: 5px;
+  --main-margin: 5px;
+  --dark-blue: rgb(4, 30, 55);
+  --placeholder-blue: rgb(4, 30, 55, 80%);
+  --pink-graph-transparent: rgba(251,160,159,80%);
+  --blue-graph-transparent: rgb(4, 30, 55, 30%);
+  --light-blue: rgb(4, 30, 55, 50%);
+  --light-background-color: rgb(255, 255, 255, 50%);
+  --background-color: rgba(244,244,244,255);
+  --grey: rgba(122,121,121,255);
+}
+
+.pointer {cursor: pointer;}
+
+body{
+  background-image: url("../public/background.jpg");
+  background-size: cover;
+  font-family: 'Unbounded', cursive;
+  font-size: medium;
+  font-weight: 400;
+  color: var(--dark-blue);
+}
+
+.container{
+  margin-left: 10%;
+  margin-right: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button{
+  background-color: var(--dark-blue);
+  color: var(--background-color);
+  border: var(--dark-blue);
+  border-radius: var(--main-radius);
+  font-family: 'Unbounded', cursive;
+  font-size: medium;
+  font-weight: 300;
+  text-align: center;
+  padding: 7px 12px 7px 12px;
+  transition: color 100ms;
+  margin-right: 2%;
+  margin-left: 2%;
+}
+
+.button:hover{
+  background-color: var(--light-blue);
+}
+
+.button:active{
+  background-color: var(--light-blue);
+  transition: color 100ms;
+}
+
+.big-text{
+  font-weight: 400;
+  font-size: large;
+}
+
+.small-text{
+  font-weight: 300;
+  font-size: small;
+}
+
+svg text, #arrow{
+  fill: var(--dark-blue);
+}
+
+svg #triangle, #rectangle, #circle{
+  fill: var(--blue-graph-transparent);
+}

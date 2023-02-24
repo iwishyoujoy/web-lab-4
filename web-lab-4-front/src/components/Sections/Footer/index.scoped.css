@@ -1,0 +1,11 @@
+footer{
+    text-align: center;
+    margin-top: 5%;
+}
+
+#itmo-logo{
+    height: auto;
+    width: auto;
+    max-width: 150px;
+    max-height: 200px;
+}

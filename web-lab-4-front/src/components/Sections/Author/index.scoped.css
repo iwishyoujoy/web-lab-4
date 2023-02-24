@@ -1,0 +1,8 @@
+#author{
+    width: 100%;
+    grid-area: author;
+    text-align: center;
+    margin-bottom: 4%;
+    font-weight: 300;
+    font-size: large;
+}

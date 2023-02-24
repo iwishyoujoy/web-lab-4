@@ -1,0 +1,96 @@
+#login-container{
+    margin-top: 1%;
+    align-self: center;
+    width: 300px;
+    /*margin-right: 37%;*/
+    /*margin-left: 37%;*/
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    background-color: var(--light-background-color);
+    border-radius: var(--main-radius);
+    align-items: center;
+    justify-content: center;
+    padding: 50px 10px 50px 10px;
+}
+
+#login-small-text{
+    margin-bottom: 10%;
+}
+
+#input-container{
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    justify-content: center;
+    margin-bottom: 10%;
+}
+
+.input-text{
+    font-family: 'Unbounded', cursive;
+    font-size: small;
+    font-weight: 300;
+    text-align: left;
+    border-radius: var(--main-radius);
+    border-color: var(--dark-blue);
+    padding: 3%;
+}
+
+.input-text::placeholder{
+    color: var(--placeholder-blue);
+}
+
+#choice-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+/* The actual popup (appears on top) */
+.popup{
+    /*visibility: hidden;*/
+    display: none;
+    width: 160px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup:after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
+.popup .show {
+    /*visibility: visible;*/
+    display: block;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+}
