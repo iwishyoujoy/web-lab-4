@@ -1,10 +1,31 @@
 import "./index.scoped.css";
 import AppContainer from "../../AppContainer";
 import {ReactComponent as Graph} from "../Graph/graph.svg";
+import {useState} from "react";
+import toast from "react-hot-toast";
 
 function Input() {
 
+    function getToast(message){
+        toast(message, {
+            style: {
+                borderRadius: '10px',
+                color: 'rgb(4, 30, 55)',
+                background: 'rgb(255, 255, 255, 80%)'
+            }
+        })
+    }
 
+    const [xValue, setNewX] = useState("0");
+
+    const selectX = (e) => {
+        setX(e.value + "");
+        getToast("вы выбрали x = " + e.value);
+    }
+
+    function setX(xValue) {
+        setNewX(xValue + "");
+    }
 
     return (
         <AppContainer>
@@ -16,7 +37,8 @@ function Input() {
                             <div className="X-values">
                                 <div id="X-first-row">
                                     <div className="one-radio-container">
-                                        <input type="radio" className="pointer radio-button" id="x-5"></input>
+                                        <input type="radio" className="pointer radio-button" id="x-5" value="-5"
+                                               onChange={selectX} checked={xValue === ("-5")}></input>
                                         <label className="radio-label" htmlFor="x-5">-5</label>
                                     </div>
                                     <div className="one-radio-container">

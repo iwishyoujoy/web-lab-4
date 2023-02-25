@@ -1,12 +1,12 @@
 <svg id="graph" class="pointer" xmlns="http://www.w3.org/2000/svg" width="303px" height="300px">
-    <!--Треугольник в первой четверти-->
-    <polygon id="triangle" points="150,150 200,150 150,100"></polygon>
+    <!--Треугольник в третьей четверти-->
+    <polygon id="triangle" points="150,150 50,150 150,200"></polygon>
 
-    <!--Прямоугольник в третьей четверти-->
-    <polygon id="rectangle" points="50,150 150,150 150,200 50,200"></polygon>
+    <!--Прямоугольник во второй четверти-->
+    <polygon id="rectangle" points="100,150 150,150 150,50 100,50"></polygon>
 
     <!--Четверть круга в четвертой четверти-->
-    <path id="circle" d="M200,150 A50,50 90 0,1 150,200 L 150,150 Z"></path>
+    <path id="circle" d="M250,150 A100,100 90 0,1 150,250 L 150,150 Z"></path>
 
     <!-- Координатные оси -->
     <line x1="0" x2="300" y1="150" y2="150" stroke="#041e37"></line>

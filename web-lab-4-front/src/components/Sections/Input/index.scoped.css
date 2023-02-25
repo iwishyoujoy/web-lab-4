@@ -102,7 +102,10 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    padding: 0px 15px 0px 15px;
+}
+
+#graph{
+    margin: 15px 15px 15px 15px;
 }
 
 #button-container{
@@ -138,4 +141,33 @@
 #results td {
     font-weight: 300;
     border: 1px var(--dark-blue) solid;
+}
+
+@media (max-width: 1272px){
+    #button-container{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 874px){
+    #main-container{
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "data-container"
+            "graph-container"
+            "button-container"
+            "table-container";
+        min-width: 310px;
+    }
+
+    #graph{
+        margin: 10px 10px 10px 10px;
+    }
+
+    #results{
+        font-size: small;
+    }
+
 }

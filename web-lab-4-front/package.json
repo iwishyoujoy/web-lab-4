@@ -3,13 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.3",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "http-proxy-middleware": "^2.0.6",
     "craco-plugin-scoped-css": "^1.1.1",
+    "http-proxy-middleware": "^2.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.0",
     "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
@@ -39,7 +41,10 @@
     ]
   },
   "options": {
-    "allowedHosts": ["localhost", ".localhost"],
-    "proxy": "https://localhost:8080/"
-  }
+    "allowedHosts": [
+      "localhost",
+      ".localhost"
+    ]
+  },
+  "proxy": "http://localhost:8080/"
 }

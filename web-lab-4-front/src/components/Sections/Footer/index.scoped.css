@@ -9,3 +9,9 @@ footer{
     max-width: 150px;
     max-height: 200px;
 }
+
+@media (max-width: 874px){
+    footer{
+        margin-top: 10%;
+    }
+}

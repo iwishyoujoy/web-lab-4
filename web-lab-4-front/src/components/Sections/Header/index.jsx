@@ -6,8 +6,8 @@ function Header(props) {
             <AppContainer>
                 <nav className="menu">
                     {props.navigation.map(
-                        (item) => (
-                            <a className="pointer link" href={item.link}>{item.title}</a>
+                        (item, key) => (
+                            <a key={key} className="pointer link" href={item.link}>{item.title}</a>
                         )
                     )}
                 </nav>

@@ -12,7 +12,7 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @PostMapping("/register")
+    @PostMapping("/api/register")
     public void register(@RequestParam("login") String login, @RequestParam("password") String password) {
         authService.register(login, password);
     }
