@@ -16,7 +16,7 @@ function LogIn() {
     const BAD_REQUEST_ERROR = "Invalid log in request";
     const UNKNOWN_ERROR = "Unknown error";
 
-    function getToast(message){
+    function popupMessage(message){
         toast(message, {
             style: {
                 borderRadius: '10px',
@@ -28,11 +28,11 @@ function LogIn() {
 
     function validateData(){
         if (login === ""){
-            getToast(EMPTY_LOGIN_ERROR);
+            popupMessage(EMPTY_LOGIN_ERROR);
             return false;
         }
         else if (password === ""){
-            getToast(EMPTY_PASSWORD_ERROR);
+            popupMessage(EMPTY_PASSWORD_ERROR);
             return false;
         }
         else{
@@ -46,16 +46,16 @@ function LogIn() {
         }
         else{
             if (response.statusText === 'Conflict'){
-                getToast(CONFLICT_ERROR);
+                popupMessage(CONFLICT_ERROR);
             }
             else if(response.statusText === 'Unauthorized'){
-                getToast(UNAUTHORIZED_ERROR);
+                popupMessage(UNAUTHORIZED_ERROR);
             }
             else if(response.statusText === 'Bad Request'){
-                getToast(BAD_REQUEST_ERROR);
+                popupMessage(BAD_REQUEST_ERROR);
             }
             else{
-                getToast(UNKNOWN_ERROR);
+                popupMessage(UNKNOWN_ERROR);
             }
             return false;
         }

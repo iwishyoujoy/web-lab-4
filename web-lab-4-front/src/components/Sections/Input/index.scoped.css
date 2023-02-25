@@ -104,10 +104,6 @@
     align-items: center;
 }
 
-#graph{
-    margin: 15px 15px 15px 15px;
-}
-
 #button-container{
     margin-top: 2%;
     grid-area: button-container;
@@ -164,6 +160,10 @@
 
     #graph{
         margin: 10px 10px 10px 10px;
+    }
+
+    #graph-container{
+        padding: 5px 0 5px 0;
     }
 
     #results{
