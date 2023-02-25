@@ -3,11 +3,16 @@ import AppContainer from "../../AppContainer";
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import toast from "react-hot-toast";
+import {useDispatch} from "react-redux";
+import {setLogin} from "../../../redux/login";
+import {setPassword} from "../../../redux/password";
 
 function LogIn() {
     const navigate = useNavigate();
-    const [login, setLogin] = useState("");
-    const [password, setPassword] = useState("");
+    const dispatch = useDispatch();
+
+    const [newLogin, setNewLogin] = useState("");
+    const [newPassword, setNewPassword] = useState("");
 
     const EMPTY_LOGIN_ERROR = "Login can't be empty";
     const EMPTY_PASSWORD_ERROR = "Password can't be empty";
@@ -27,11 +32,11 @@ function LogIn() {
     }
 
     function validateData(){
-        if (login === ""){
+        if (newLogin === ""){
             popupMessage(EMPTY_LOGIN_ERROR);
             return false;
         }
-        else if (password === ""){
+        else if (newPassword === ""){
             popupMessage(EMPTY_PASSWORD_ERROR);
             return false;
         }
@@ -63,8 +68,12 @@ function LogIn() {
 
     function logInRequest(){
         if (validateData()){
-            fetch("/api/login", {method: 'POST', headers: {"Authorization": "Basic " + btoa(login + ":" + password).replace("=", "")}}).then(response => {
+            fetch("/api/login", {
+                method: 'POST',
+                headers: {"Authorization": "Basic " + btoa(newLogin + ":" + newPassword).replace("=", "")}}).then(response => {
                 if (checkResponse(response)){
+                    dispatch(setLogin(newLogin));
+                    dispatch(setPassword(newPassword));
                     navigate('/mainpage');
                 }
             })
@@ -74,16 +83,19 @@ function LogIn() {
     function signUpRequest(){
         if (validateData()){
             let formData = new FormData();
-            formData.append('login', login);
-            formData.append('password', password);
+            formData.append('login', newLogin);
+            formData.append('password', newPassword);
             fetch("/api/register",{
                 method: 'POST',
                 body: formData
             }).then(response => {
                 if (checkResponse(response)){
+                    dispatch(setLogin(newLogin));
+                    dispatch(setPassword(newPassword));
                     navigate("/mainpage");
                 }
             })
+
         }
     }
     return (
@@ -98,8 +110,8 @@ function LogIn() {
                 <form id="login-password-form">
                     <span className="popup" id="error-popup"></span>
                     <div id="input-container">
-                        <input className="input-text" type="text" placeholder="Login" id="login" value={login} onChange={e => setLogin(e.target.value)}/>
-                        <input className="input-text" type="password" placeholder="Password" id="password" value={password} onChange={e => setPassword(e.target.value)}/>
+                        <input className="input-text" type="text" placeholder="Login" id="login" value={newLogin} onChange={e => setNewLogin(e.target.value)}/>
+                        <input className="input-text" type="password" placeholder="Password" id="password" value={newPassword} onChange={e => setNewPassword(e.target.value)}/>
                     </div>
                 </form>
                 <div id="choice-container">

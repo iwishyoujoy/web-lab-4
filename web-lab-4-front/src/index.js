@@ -7,6 +7,8 @@ import './index.css';
 import LoginPage from "./routes/LoginPage";
 import MainPage from "./routes/MainPage";
 import NotFoundPage from "./routes/NotFoundPage";
+import store from "./store";
+import {Provider} from "react-redux";
 
 const router = createBrowserRouter(
     [
@@ -31,7 +33,9 @@ const router = createBrowserRouter(
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-      <RouterProvider router={router} />
+        <Provider store={store}>
+            <RouterProvider router={router} />
+        </Provider>
     </React.StrictMode>
 );
 

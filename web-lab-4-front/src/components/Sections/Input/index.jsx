@@ -3,6 +3,7 @@ import AppContainer from "../../AppContainer";
 import {useState} from "react";
 import toast from "react-hot-toast";
 import Graph from "../Graph";
+import store from "../../../store";
 
 function Input() {
 
@@ -47,6 +48,22 @@ function Input() {
     }
     function validateY(y){
         return y > -3 && y < 3;
+    }
+
+    function sendRequest(){
+        let dotData = new FormData();
+        dotData.append('x', parseFloat(xValue));
+        dotData.append('y', parseFloat(yValue));
+        dotData.append('r', parseFloat(rValue));
+        popupMessage(String(store.getState().login.value));
+        popupMessage(String(store.getState().password.value));
+        fetch("/dots", {
+            method: "POST",
+            headers: {"Authorization": "Basic " + btoa(store.getState().login.value + ":" + store.getState().password.value).replace("=", "")},
+            body: dotData
+        }).then(response => {
+            popupMessage(response.statusText);
+        })
     }
 
     return (
@@ -175,19 +192,20 @@ function Input() {
                     <Graph radius={rValue}/>
                 </div>
                 <div id="button-container">
-                    <button className="pointer button" id="check-button">Check</button>
+                    <button className="pointer button" id="check-button" onClick={sendRequest}>Check</button>
                     <button className="pointer button" id="clear-button">Clear</button>
                 </div>
                 <div id="table-container">
                     <table id="results">
-                        <tr>
+                        <thead><tr>
                             <th>X</th>
                             <th>Y</th>
                             <th>R</th>
                             <th>Current time</th>
                             <th>Script time</th>
                             <th>Result</th>
-                        </tr>
+                        </tr></thead>
+                        <tbody></tbody>
                     </table>
                 </div>
             </div>
