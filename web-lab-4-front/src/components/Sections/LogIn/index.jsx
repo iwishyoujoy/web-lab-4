@@ -17,7 +17,7 @@ function LogIn() {
     const EMPTY_LOGIN_ERROR = "Login can't be empty";
     const EMPTY_PASSWORD_ERROR = "Password can't be empty";
     const CONFLICT_ERROR = "Login has been already taken";
-    const UNAUTHORIZED_ERROR = "Invalid login/password";
+    const UNAUTHORIZED_ERROR = "Wrong login/password";
     const BAD_REQUEST_ERROR = "Invalid log in request";
     const UNKNOWN_ERROR = "Unknown error";
 
@@ -74,7 +74,7 @@ function LogIn() {
                 if (checkResponse(response)){
                     dispatch(setLogin(newLogin));
                     dispatch(setPassword(newPassword));
-                    navigate('/mainpage');
+                    navigate("/mainpage");
                 }
             })
         }

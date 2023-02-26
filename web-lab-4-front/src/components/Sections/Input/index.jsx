@@ -1,11 +1,17 @@
 import "./index.scoped.css";
 import AppContainer from "../../AppContainer";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import toast from "react-hot-toast";
 import Graph from "../Graph";
 import store from "../../../store";
+import {useNavigate} from "react-router-dom";
 
 function Input() {
+
+    useEffect(() => {
+        checkAuth();
+        sendShowRequest();
+    }, []);
 
     function popupMessage(message){
         toast(message, {
@@ -19,9 +25,18 @@ function Input() {
     const [xValue, setX] = useState("-5");
     const [yValue, setY] = useState("0");
     const [rValue, setR] = useState("2");
+    const [dotData, setDotData] = useState([]);
 
-    const NEGATIVE_R_ERROR = "Radius value can't be less than 1!";
-    const INVALID_Y_ERROR = "Y value is out of range!";
+    const navigate = useNavigate();
+
+    const NEGATIVE_R_ERROR = "Radius can't be less than 1!";
+    const INVALID_Y_ERROR = "Y is out of range!";
+
+    function checkAuth(){
+        if (store.getState().login.value == null || store.getState().password.value == null){
+            navigate("/");
+        }
+    }
 
     const selectX = (e) => {
         setX(e.target.value);
@@ -50,22 +65,63 @@ function Input() {
         return y > -3 && y < 3;
     }
 
-    function sendRequest(){
-        let dotData = new FormData();
-        dotData.append('x', parseFloat(xValue));
-        dotData.append('y', parseFloat(yValue));
-        dotData.append('r', parseFloat(rValue));
-        popupMessage(String(store.getState().login.value));
-        popupMessage(String(store.getState().password.value));
-        fetch("/dots", {
-            method: "POST",
-            headers: {"Authorization": "Basic " + btoa(store.getState().login.value + ":" + store.getState().password.value).replace("=", "")},
-            body: dotData
-        }).then(response => {
-            popupMessage(response.statusText);
-        })
+    function sendShowRequest(){
+        (async () => {
+            let response = await fetch("/api/dots", {
+                method: "GET",
+                headers: {"Authorization": "Basic " + btoa(store.getState().login.value + ":" + store.getState().password.value).replace("=", "")}
+            })
+            let data = await response.json();
+            if (response.ok) setDotData(data);
+        })()
     }
 
+    function sendCheckRequest(){
+        let dotFormData = new FormData();
+        dotFormData.append('x', parseFloat(xValue));
+        dotFormData.append('y', parseFloat(yValue));
+        dotFormData.append('r', parseFloat(rValue));
+        (async () => {
+            let response = await fetch("/api/dots", {
+                method: "POST",
+                headers: {"Authorization": "Basic " + btoa(store.getState().login.value + ":" + store.getState().password.value).replace("=", "")},
+                body: dotFormData
+            })
+            let data = await response.json();
+            if (response.ok) setDotData([...dotData, data]);
+        })()
+    }
+
+    function sendDeleteRequest(){
+        (async () => {
+            let response = await fetch("/api/dots", {
+                method: "DELETE",
+                headers: {"Authorization": "Basic " + btoa(store.getState().login.value + ":" + store.getState().password.value).replace("=", "")}
+            })
+            if (response.ok) setDotData([]);
+        })()
+    }
+
+    function parseNumber(number){
+        if (number < 10) return ("0" + number);
+        return number;
+    }
+
+    function parseCurrentTime(timeStamp){
+        let dateFormat = new Date(timeStamp*1000);
+        return (parseNumber(dateFormat.getDate()) + "/" + parseNumber((dateFormat.getMonth()+1)) + "/" + dateFormat.getFullYear() + " "
+            + parseNumber(dateFormat.getHours()) + ":" + parseNumber(dateFormat.getMinutes()) + ":" + parseNumber(dateFormat.getSeconds()));
+    }
+
+    function parseScriptTime(scriptTime){
+        return scriptTime/1000;
+    }
+
+    function sendCoordsFromClick(x,y){
+        setX(x);
+        setY(y);
+        sendCheckRequest();
+    }
     return (
         <AppContainer>
             <div id="main-container">
@@ -189,11 +245,11 @@ function Input() {
                     </div>
                 </div>
                 <div id="graph-container">
-                    <Graph radius={rValue}/>
+                    <Graph radius={rValue} dots={dotData} setAndSendCoords={sendCoordsFromClick}/>
                 </div>
                 <div id="button-container">
-                    <button className="pointer button" id="check-button" onClick={sendRequest}>Check</button>
-                    <button className="pointer button" id="clear-button">Clear</button>
+                    <button className="pointer button" id="check-button" onClick={sendCheckRequest}>Check</button>
+                    <button className="pointer button" id="clear-button" onClick={sendDeleteRequest}>Clear</button>
                 </div>
                 <div id="table-container">
                     <table id="results">
@@ -205,7 +261,20 @@ function Input() {
                             <th>Script time</th>
                             <th>Result</th>
                         </tr></thead>
-                        <tbody></tbody>
+                        <tbody>
+                        {dotData && dotData.map(
+                            (dot, i) => (
+                                <tr key={i}>
+                                    <td>{dot.x}</td>
+                                    <td>{dot.y}</td>
+                                    <td>{dot.r}</td>
+                                    <td>{parseCurrentTime(dot.timestamp)}</td>
+                                    <td>{parseScriptTime(dot.scriptTime)}</td>
+                                    <td>{dot.status ? "hit" : "miss"}</td>
+                                </tr>
+                            )
+                        )}
+                        </tbody>
                     </table>
                 </div>
             </div>

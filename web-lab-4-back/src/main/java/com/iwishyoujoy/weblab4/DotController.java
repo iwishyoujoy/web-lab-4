@@ -1,6 +1,7 @@
 package com.iwishyoujoy.weblab4;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
@@ -19,7 +20,7 @@ public class DotController {
         this.authService = authService;
     }
 
-    @PostMapping("/dots")
+    @PostMapping("/api/dots")
     public Dot addDot(@RequestParam("x") float x, @RequestParam("y") float y, @RequestParam("r") float r,
                       @RequestHeader("Authorization") String authorization) {
         long timer = System.nanoTime();
@@ -33,13 +34,14 @@ public class DotController {
         return dot;
     }
 
-    @DeleteMapping("/dots")
+    @Transactional
+    @DeleteMapping("/api/dots")
     public void deleteDots(@RequestHeader("Authorization") String authorization) {
         String login = authService.check(authorization);
         dotRepository.deleteByOwner(login);
     }
 
-    @GetMapping("/dots")
+    @GetMapping("/api/dots")
     public List<Dot> getDots(@RequestHeader("Authorization") String authorization) {
         String login = authService.check(authorization);
         return dotRepository.getDotsByOwner(login);
