@@ -5,12 +5,17 @@ import toast from "react-hot-toast";
 import Graph from "../Graph";
 import store from "../../../store";
 import {useNavigate} from "react-router-dom";
+import Belle from "belle";
 
 function Input() {
 
     useEffect(() => {
-        checkAuth();
-        sendShowRequest();
+        if (store.getState().login.value == null || store.getState().password.value == null){
+            navigate("/");
+        }
+        else{
+            sendShowRequest();
+        }
     }, []);
 
     function popupMessage(message){
@@ -28,18 +33,13 @@ function Input() {
     const [dotData, setDotData] = useState([]);
 
     const navigate = useNavigate();
+    const buttonBelle = Belle.Button;
 
     const NEGATIVE_R_ERROR = "Radius can't be less than 1!";
     const INVALID_Y_ERROR = "Y is out of range!";
 
-    function checkAuth(){
-        if (store.getState().login.value == null || store.getState().password.value == null){
-            navigate("/");
-        }
-    }
-
     const selectX = (e) => {
-        setX(e.target.value);
+        setX(parseInt(e.target.value));
     }
     const selectY = (e) => {
         if (validateY(e.target.value)){
@@ -69,22 +69,22 @@ function Input() {
         (async () => {
             let response = await fetch("/api/dots", {
                 method: "GET",
-                headers: {"Authorization": "Basic " + btoa(store.getState().login.value + ":" + store.getState().password.value).replace("=", "")}
+                headers: {"Authorization": "Basic " + btoa(store.getState().login.value + ":" + store.getState().password.value).replaceAll("=", "")}
             })
             let data = await response.json();
             if (response.ok) setDotData(data);
         })()
     }
 
-    function sendCheckRequest(){
+    function sendCheckRequest(x,y,r){
         let dotFormData = new FormData();
-        dotFormData.append('x', parseFloat(xValue));
-        dotFormData.append('y', parseFloat(yValue));
-        dotFormData.append('r', parseFloat(rValue));
+        dotFormData.append('x', parseFloat(x));
+        dotFormData.append('y', parseFloat(y));
+        dotFormData.append('r', parseFloat(r));
         (async () => {
             let response = await fetch("/api/dots", {
                 method: "POST",
-                headers: {"Authorization": "Basic " + btoa(store.getState().login.value + ":" + store.getState().password.value).replace("=", "")},
+                headers: {"Authorization": "Basic " + btoa(store.getState().login.value + ":" + store.getState().password.value).replaceAll("=", "")},
                 body: dotFormData
             })
             let data = await response.json();
@@ -96,7 +96,7 @@ function Input() {
         (async () => {
             let response = await fetch("/api/dots", {
                 method: "DELETE",
-                headers: {"Authorization": "Basic " + btoa(store.getState().login.value + ":" + store.getState().password.value).replace("=", "")}
+                headers: {"Authorization": "Basic " + btoa(store.getState().login.value + ":" + store.getState().password.value).replaceAll("=", "")}
             })
             if (response.ok) setDotData([]);
         })()
@@ -120,7 +120,7 @@ function Input() {
     function sendCoordsFromClick(x,y){
         setX(x);
         setY(y);
-        sendCheckRequest();
+        sendCheckRequest(x,y,rValue);
     }
     return (
         <AppContainer>
@@ -132,51 +132,51 @@ function Input() {
                             <div id="X-first-row">
                                 <div className="one-radio-container">
                                     <input type="radio" className="pointer radio-button" id="x-5" value="-5"
-                                           onChange={selectX} checked={xValue === ("-5")}></input>
+                                           onChange={selectX} checked={xValue === (-5)}></input>
                                     <label className="radio-label" htmlFor="x-5">-5</label>
                                 </div>
                                 <div className="one-radio-container">
                                     <input type="radio" className="pointer radio-button" id="x-4" value="-4"
-                                           onChange={selectX} checked={xValue === ("-4")}></input>
+                                           onChange={selectX} checked={xValue === (-4)}></input>
                                     <label className="radio-label" htmlFor="x-4">-4</label>
                                 </div>
                                 <div className="one-radio-container">
                                     <input type="radio" className="pointer radio-button" id="x-3" value="-3"
-                                        onChange={selectX} checked={xValue === ("-3")}></input>
+                                        onChange={selectX} checked={xValue === (-3)}></input>
                                     <label className="radio-label" htmlFor="x-3">-3</label>
                                 </div>
                             </div>
                             <div id="X-second-row">
                                 <div className="one-radio-container">
                                     <input type="radio" className="pointer radio-button" id="x-2" value="-2"
-                                           onChange={selectX} checked={xValue === ("-2")}></input>
+                                           onChange={selectX} checked={xValue === (-2)}></input>
                                     <label className="radio-label" htmlFor="x-2">-2</label>
                                 </div>
                                 <div className="one-radio-container">
                                     <input type="radio" className="pointer radio-button" id="x-1" value="-1"
-                                           onChange={selectX} checked={xValue === ("-1")}></input>
+                                           onChange={selectX} checked={xValue === (-1)}></input>
                                     <label className="radio-label" htmlFor="x-1">-1</label>
                                 </div>
                                 <div className="one-radio-container">
                                     <input type="radio" className="pointer radio-button" id="x0" value="0"
-                                           onChange={selectX} checked={xValue === ("0")}></input>
+                                           onChange={selectX} checked={xValue === (0)}></input>
                                     <label className="radio-label" htmlFor="x0">0</label>
                                 </div>
                             </div>
                             <div id="X-third-row">
                                 <div className="one-radio-container">
                                     <input type="radio" className="pointer radio-button" id="x1" value="1"
-                                           onChange={selectX} checked={xValue === ("1")}></input>
+                                           onChange={selectX} checked={xValue === (1)}></input>
                                     <label className="radio-label" htmlFor="x1">1</label>
                                 </div>
                                 <div className="one-radio-container">
                                     <input type="radio" className="pointer radio-button" id="x2"  value="2"
-                                           onChange={selectX} checked={xValue === ("2")}></input>
+                                           onChange={selectX} checked={xValue === (2)}></input>
                                     <label className="radio-label" htmlFor="x2">2</label>
                                 </div>
                                 <div className="one-radio-container">
                                     <input type="radio" className="pointer radio-button" id="x3" value="3"
-                                           onChange={selectX} checked={xValue === ("3")}></input>
+                                           onChange={selectX} checked={xValue === (3)}></input>
                                     <label className="radio-label" htmlFor="x3">3</label>
                                 </div>
                             </div>
@@ -248,8 +248,8 @@ function Input() {
                     <Graph radius={rValue} dots={dotData} setAndSendCoords={sendCoordsFromClick}/>
                 </div>
                 <div id="button-container">
-                    <button className="pointer button" id="check-button" onClick={sendCheckRequest}>Check</button>
-                    <button className="pointer button" id="clear-button" onClick={sendDeleteRequest}>Clear</button>
+                    <buttonBelle className="pointer button" id="check-button" onClick={() => sendCheckRequest(xValue, yValue, rValue)}>Check</buttonBelle>
+                    <buttonBelle className="pointer button" id="clear-button" onClick={sendDeleteRequest}>Clear</buttonBelle>
                 </div>
                 <div id="table-container">
                     <table id="results">

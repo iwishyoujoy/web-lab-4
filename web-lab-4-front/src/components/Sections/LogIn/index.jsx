@@ -70,7 +70,7 @@ function LogIn() {
         if (validateData()){
             fetch("/api/login", {
                 method: 'POST',
-                headers: {"Authorization": "Basic " + btoa(newLogin + ":" + newPassword).replace("=", "")}}).then(response => {
+                headers: {"Authorization": "Basic " + btoa(newLogin + ":" + newPassword).replaceAll("=", "")}}).then(response => {
                 if (checkResponse(response)){
                     dispatch(setLogin(newLogin));
                     dispatch(setPassword(newPassword));
